@@ -101,13 +101,13 @@
       "Navigate to data-url on click (window.open for external)",
       "Verify links work without interfering with drag"
     ],
-    "status": "pending",
+    "status": "done",
     "priority": 2,
     "depends_on": [
       "drag-001"
     ],
     "discovered_from": null,
-    "spec_file": "docs/STRUCTURE.md",
+    "spec_file": "docs/history/20241222_cards-002_card_click_navigate.md",
     "created_at": "2024-12-22"
   },
   {
