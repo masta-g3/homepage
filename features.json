@@ -83,13 +83,13 @@
       "Handle missing/corrupt localStorage gracefully",
       "Verify positions persist across page reload"
     ],
-    "status": "pending",
+    "status": "done",
     "priority": 2,
     "depends_on": [
       "drag-001"
     ],
     "discovered_from": null,
-    "spec_file": "docs/STRUCTURE.md",
+    "spec_file": "docs/history/20241222_drag-002_localstorage_persistence.md",
     "created_at": "2024-12-22"
   },
   {

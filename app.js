@@ -11,6 +11,30 @@ const dragState = {
 };
 
 const DRAG_THRESHOLD = 5;
+const STORAGE_KEY = 'mg3_card_positions';
+
+function loadPositionsFromStorage() {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function savePositionToStorage(cardId, x, y) {
+  try {
+    const positions = loadPositionsFromStorage();
+    positions[cardId] = { x, y };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(positions));
+  } catch (e) {
+    // Fail silently
+  }
+}
+
+function getCardId(card) {
+  return card.dataset.id || card.id || Array.from(card.parentNode.children).indexOf(card);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   // Modal interactions
@@ -34,14 +58,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Card positioning from data attributes
+  // Card positioning from data attributes and storage
   const cards = document.querySelectorAll('.project-card');
   const workspace = document.querySelector('.workspace');
 
   if (workspace && cards.length > 0) {
+    const storedPositions = loadPositionsFromStorage();
+
     cards.forEach((card) => {
-      const x = parseFloat(card.dataset.x) || 0;
-      const y = parseFloat(card.dataset.y) || 0;
+      const cardId = getCardId(card);
+
+      // Prefer stored position, fall back to data attributes
+      const stored = storedPositions[cardId];
+      const x = stored ? stored.x : (parseFloat(card.dataset.x) || 0);
+      const y = stored ? stored.y : (parseFloat(card.dataset.y) || 0);
       const rotation = parseFloat(card.dataset.rotation) || 0;
 
       card.style.left = x + '%';
@@ -125,6 +155,10 @@ function onPointerUp(e) {
 
     card.dataset.x = percentX.toFixed(1);
     card.dataset.y = percentY.toFixed(1);
+
+    // Save to localStorage
+    const cardId = getCardId(card);
+    savePositionToStorage(cardId, percentX.toFixed(1), percentY.toFixed(1));
   }
 
   card.style.zIndex = '';
