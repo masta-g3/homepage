@@ -139,13 +139,13 @@
       "Close modal on backdrop click",
       "Close modal on Escape key press"
     ],
-    "status": "pending",
+    "status": "done",
     "priority": 2,
     "depends_on": [
       "modal-001"
     ],
     "discovered_from": null,
-    "spec_file": "docs/STRUCTURE.md",
+    "spec_file": "docs/history/20241222_modal-002_modal_functionality.md",
     "created_at": "2024-12-22"
   },
   {
