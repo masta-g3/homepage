@@ -1,6 +1,5 @@
 // Homepage interactions
 
-// Drag state management
 const dragState = {
   card: null,
   offsetX: 0,
@@ -12,6 +11,8 @@ const dragState = {
 
 const DRAG_THRESHOLD = 5;
 const STORAGE_KEY = 'mg3_card_positions';
+
+let originalPositions = {};
 
 function isMobileLayout() {
   return window.matchMedia('(max-width: 768px)').matches;
@@ -36,107 +37,134 @@ function savePositionToStorage(cardId, x, y) {
   }
 }
 
-function getCardId(card) {
-  return card.dataset.id || card.id || Array.from(card.parentNode.children).indexOf(card);
+function createProjectCard(project) {
+  const card = document.createElement('article');
+  card.className = 'project-card';
+  card.tabIndex = 0;
+  card.setAttribute('role', 'link');
+  card.dataset.id = project.id;
+  card.dataset.url = project.url;
+  card.dataset.x = project.position.x;
+  card.dataset.y = project.position.y;
+  card.dataset.rotation = project.position.rotation;
+
+  card.innerHTML = `
+    <time datetime="${project.date}">${project.date}</time>
+    <h2>${project.title}</h2>
+    <p class="description">${project.description}</p>
+  `;
+
+  return card;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Modal interactions
-  const aboutTrigger = document.querySelector('.about-trigger');
-  const aboutModal = document.querySelector('.about-modal');
-  const modalClose = document.querySelector('.modal-close');
+function initializeCards(cards, workspace) {
+  const storedPositions = loadPositionsFromStorage();
 
-  if (aboutTrigger && aboutModal) {
-    aboutTrigger.addEventListener('click', () => {
-      aboutModal.showModal();
-    });
-
-    modalClose.addEventListener('click', () => {
-      aboutModal.close();
-    });
-
-    aboutModal.addEventListener('click', (e) => {
-      if (e.target === aboutModal) {
-        aboutModal.close();
-      }
-    });
-  }
-
-  // Card positioning from data attributes and storage
-  const cards = document.querySelectorAll('.project-card');
-  const workspace = document.querySelector('.workspace');
-  const resetTrigger = document.querySelector('.reset-trigger');
-
-  // Store original positions from HTML before any modifications
-  const originalPositions = {};
   cards.forEach((card) => {
-    const cardId = getCardId(card);
+    const cardId = card.dataset.id;
+
+    // Store original position
     originalPositions[cardId] = {
       x: parseFloat(card.dataset.x) || 0,
       y: parseFloat(card.dataset.y) || 0
     };
+
+    // Apply position (stored or original)
+    const stored = storedPositions[cardId];
+    const x = stored ? stored.x : originalPositions[cardId].x;
+    const y = stored ? stored.y : originalPositions[cardId].y;
+    const rotation = parseFloat(card.dataset.rotation) || 0;
+
+    card.style.left = x + '%';
+    card.style.top = y + '%';
+    card.style.setProperty('--rotation', rotation + 'deg');
+
+    // Drag listener
+    card.addEventListener('pointerdown', onCardPointerDown);
+
+    // Click to open URL
+    card.addEventListener('click', (e) => {
+      if (e.target.tagName !== 'A' && !dragState.moved) {
+        window.open(card.dataset.url, '_blank');
+      }
+    });
+
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        window.open(card.dataset.url, '_blank');
+      }
+    });
   });
 
-  if (workspace && cards.length > 0 && !isMobileLayout()) {
-    const storedPositions = loadPositionsFromStorage();
+  // Global drag handlers
+  document.addEventListener('pointermove', onPointerMove);
+  document.addEventListener('pointerup', onPointerUp);
+}
+
+function initializeReset(resetTrigger, cards) {
+  if (!resetTrigger) return;
+
+  resetTrigger.addEventListener('click', () => {
+    localStorage.removeItem(STORAGE_KEY);
 
     cards.forEach((card) => {
-      const cardId = getCardId(card);
-
-      // Prefer stored position, fall back to data attributes
-      const stored = storedPositions[cardId];
+      const cardId = card.dataset.id;
       const original = originalPositions[cardId];
-      const x = stored ? stored.x : original.x;
-      const y = stored ? stored.y : original.y;
-      const rotation = parseFloat(card.dataset.rotation) || 0;
-
-      card.style.left = x + '%';
-      card.style.top = y + '%';
-      card.style.setProperty('--rotation', rotation + 'deg');
+      card.style.left = original.x + '%';
+      card.style.top = original.y + '%';
     });
+  });
+}
 
-    // Initialize drag listeners on each card
-    cards.forEach((card) => {
-      card.addEventListener('pointerdown', onCardPointerDown);
-    });
+function initializeModal() {
+  const aboutTrigger = document.querySelector('.about-trigger');
+  const aboutModal = document.querySelector('.about-modal');
+  const modalClose = document.querySelector('.modal-close');
 
-    // Global drag handlers
-    document.addEventListener('pointermove', onPointerMove);
-    document.addEventListener('pointerup', onPointerUp);
+  if (!aboutTrigger || !aboutModal) return;
 
-    // Reset button handler
-    if (resetTrigger) {
-      resetTrigger.addEventListener('click', () => {
-        localStorage.removeItem(STORAGE_KEY);
+  aboutTrigger.addEventListener('click', () => aboutModal.showModal());
+  modalClose.addEventListener('click', () => aboutModal.close());
+  aboutModal.addEventListener('click', (e) => {
+    if (e.target === aboutModal) aboutModal.close();
+  });
+}
 
-        cards.forEach((card) => {
-          const cardId = getCardId(card);
-          const original = originalPositions[cardId];
-          card.style.left = original.x + '%';
-          card.style.top = original.y + '%';
-        });
-      });
-    }
+function renderAbout(aboutData) {
+  const modalContent = document.querySelector('.modal-content');
+  if (!modalContent || !aboutData.content) return;
+
+  modalContent.innerHTML = `<p>${aboutData.content}</p>`;
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  initializeModal();
+
+  const workspace = document.querySelector('.workspace');
+  const resetTrigger = document.querySelector('.reset-trigger');
+
+  // Fetch project data
+  const response = await fetch('data.json');
+  const data = await response.json();
+
+  // Render about content
+  if (data.about) {
+    renderAbout(data.about);
   }
 
-  // Card click to open URL
-  cards.forEach((card) => {
-    const url = card.dataset.url;
-    if (url) {
-      card.addEventListener('click', (e) => {
-        if (e.target.tagName !== 'A' && !dragState.moved) {
-          window.open(url, '_blank');
-        }
-      });
-
-      card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          window.open(url, '_blank');
-        }
-      });
-    }
+  // Render project cards
+  data.projects.forEach((project) => {
+    const card = createProjectCard(project);
+    workspace.appendChild(card);
   });
+
+  const cards = document.querySelectorAll('.project-card');
+
+  if (workspace && cards.length > 0 && !isMobileLayout()) {
+    initializeCards(cards, workspace);
+    initializeReset(resetTrigger, cards);
+  }
 });
 
 function onCardPointerDown(e) {
@@ -190,12 +218,7 @@ function onPointerUp(e) {
     const percentX = (card.offsetLeft / workspace.clientWidth) * 100;
     const percentY = (card.offsetTop / workspace.clientHeight) * 100;
 
-    card.dataset.x = percentX.toFixed(1);
-    card.dataset.y = percentY.toFixed(1);
-
-    // Save to localStorage
-    const cardId = getCardId(card);
-    savePositionToStorage(cardId, percentX.toFixed(1), percentY.toFixed(1));
+    savePositionToStorage(card.dataset.id, percentX.toFixed(1), percentY.toFixed(1));
   }
 
   card.style.zIndex = '';
@@ -204,6 +227,5 @@ function onPointerUp(e) {
   dragState.card = null;
   dragState.offsetX = 0;
   dragState.offsetY = 0;
-  // Delay reset so click handler can check the moved flag
   setTimeout(() => { dragState.moved = false; }, 0);
 }

@@ -23,10 +23,11 @@ A single-page interactive portfolio/homepage that transforms the industrial plot
 
 ```
 homepage/
-├── index.html          # Single page entry point
+├── index.html          # Single page entry point (shell only)
+├── data.json           # Project cards and about content
 ├── styles.css          # Inherited design system (from blog)
 ├── app.css             # Homepage-specific styles (cards, workspace, modal)
-├── app.js              # Drag logic, modal handling, card positioning
+├── app.js              # Fetches data.json, renders cards, handles interactions
 ├── fonts/              # Berkeley Mono woff2 files
 ├── images/             # Project screenshots (optional)
 │   └── projects/       # Organized by project slug
@@ -38,27 +39,31 @@ homepage/
 
 ## Data Model
 
-Projects are defined inline in `index.html` as semantic HTML, enhanced by JS:
+Projects and about content are defined in `data.json`:
 
-```html
-<article class="project-card"
-         data-url="https://example.com"
-         data-x="120"
-         data-y="80"
-         data-rotation="-2">
-  <time datetime="2024-01">2024-01</time>
-  <h2>project name</h2>
-  <p class="description">Brief description of the project.</p>
-  <figure class="screenshot">
-    <img src="images/projects/example.png" alt="Screenshot">
-  </figure>
-</article>
+```json
+{
+  "projects": [
+    {
+      "id": "project-slug",
+      "title": "Project Name",
+      "description": "Brief description of the project.",
+      "url": "https://example.com",
+      "date": "2024-01",
+      "position": { "x": 15, "y": 20, "rotation": -2 }
+    }
+  ],
+  "about": {
+    "content": "About text here."
+  }
+}
 ```
 
-**Card properties**:
-- `data-url`: External link to project
-- `data-x`, `data-y`: Initial position (percentage-based for responsiveness)
-- `data-rotation`: Slight rotation in degrees (-5 to 5)
+**Project properties**:
+- `id`: Unique identifier (used for localStorage position persistence)
+- `title`, `description`, `url`, `date`: Display content
+- `position.x`, `position.y`: Initial position (percentage-based)
+- `position.rotation`: Slight rotation in degrees (-5 to 5)
 
 Positions persist to `localStorage` after drag, so users' arrangements are remembered.
 

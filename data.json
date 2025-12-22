@@ -1,0 +1,31 @@
+{
+  "projects": [
+    {
+      "id": "llmpedia",
+      "title": "llmpedia.ai",
+      "description": "Living archive of curated LLM papers with summaries, pixel art, search, and an AI agent for research Q&A.",
+      "url": "https://llmpedia.ai",
+      "date": "2024",
+      "position": { "x": 15, "y": 20, "rotation": -2 }
+    },
+    {
+      "id": "pdf2markdown",
+      "title": "pdf2markdown.ai",
+      "description": "Lightweight AI-powered PDF to Markdown converter with clean UI. No ads, no bloat—just fast, high-quality conversions.",
+      "url": "https://pdf2markdown.ai",
+      "date": "2025",
+      "position": { "x": 55, "y": 35, "rotation": 1 }
+    },
+    {
+      "id": "blog",
+      "title": "blog.mg3.dev",
+      "description": "Thoughts on language, markets, numeric computations, among other things.",
+      "url": "https://blog.mg3.dev",
+      "date": "live",
+      "position": { "x": 35, "y": 60, "rotation": -1 }
+    }
+  ],
+  "about": {
+    "content": "Stories of a land fish living in SF."
+  }
+}
