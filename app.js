@@ -67,6 +67,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const workspace = document.querySelector('.workspace');
   const resetTrigger = document.querySelector('.reset-trigger');
 
+  // Store original positions from HTML before any modifications
+  const originalPositions = {};
+  cards.forEach((card) => {
+    const cardId = getCardId(card);
+    originalPositions[cardId] = {
+      x: parseFloat(card.dataset.x) || 0,
+      y: parseFloat(card.dataset.y) || 0
+    };
+  });
+
   if (workspace && cards.length > 0 && !isMobileLayout()) {
     const storedPositions = loadPositionsFromStorage();
 
@@ -75,8 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Prefer stored position, fall back to data attributes
       const stored = storedPositions[cardId];
-      const x = stored ? stored.x : (parseFloat(card.dataset.x) || 0);
-      const y = stored ? stored.y : (parseFloat(card.dataset.y) || 0);
+      const original = originalPositions[cardId];
+      const x = stored ? stored.x : original.x;
+      const y = stored ? stored.y : original.y;
       const rotation = parseFloat(card.dataset.rotation) || 0;
 
       card.style.left = x + '%';
@@ -99,10 +110,10 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem(STORAGE_KEY);
 
         cards.forEach((card) => {
-          const x = parseFloat(card.dataset.x) || 0;
-          const y = parseFloat(card.dataset.y) || 0;
-          card.style.left = x + '%';
-          card.style.top = y + '%';
+          const cardId = getCardId(card);
+          const original = originalPositions[cardId];
+          card.style.left = original.x + '%';
+          card.style.top = original.y + '%';
         });
       });
     }
