@@ -45,13 +45,13 @@
       "Add 3-5 sample project cards with varied positions/rotations",
       "Verify cards render at specified positions"
     ],
-    "status": "pending",
+    "status": "done",
     "priority": 1,
     "depends_on": [
       "core-002"
     ],
     "discovered_from": null,
-    "spec_file": "docs/STRUCTURE.md",
+    "spec_file": "docs/history/20241222_cards-001_project_cards.md",
     "created_at": "2024-12-22"
   },
   {
