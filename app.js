@@ -133,5 +133,6 @@ function onPointerUp(e) {
   dragState.card = null;
   dragState.offsetX = 0;
   dragState.offsetY = 0;
-  dragState.moved = false;
+  // Delay reset so click handler can check the moved flag
+  setTimeout(() => { dragState.moved = false; }, 0);
 }
