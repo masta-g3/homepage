@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Card positioning from data attributes and storage
   const cards = document.querySelectorAll('.project-card');
   const workspace = document.querySelector('.workspace');
+  const resetTrigger = document.querySelector('.reset-trigger');
 
   if (workspace && cards.length > 0 && !isMobileLayout()) {
     const storedPositions = loadPositionsFromStorage();
@@ -91,6 +92,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Global drag handlers
     document.addEventListener('pointermove', onPointerMove);
     document.addEventListener('pointerup', onPointerUp);
+
+    // Reset button handler
+    if (resetTrigger) {
+      resetTrigger.addEventListener('click', () => {
+        localStorage.removeItem(STORAGE_KEY);
+
+        cards.forEach((card) => {
+          const x = parseFloat(card.dataset.x) || 0;
+          const y = parseFloat(card.dataset.y) || 0;
+          card.style.left = x + '%';
+          card.style.top = y + '%';
+        });
+      });
+    }
   }
 
   // Card click to open URL

@@ -197,13 +197,13 @@
       "Reapply original data-x/data-y positions",
       "Optional: subtle visual feedback on reset"
     ],
-    "status": "pending",
+    "status": "done",
     "priority": 3,
     "depends_on": [
       "drag-002"
     ],
     "discovered_from": null,
-    "spec_file": "docs/STRUCTURE.md",
+    "spec_file": "docs/history/20241222_polish-001_reset_button.md",
     "created_at": "2024-12-22"
   }
 ]
