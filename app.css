@@ -178,3 +178,35 @@
 .modal-content p:last-child {
   margin-bottom: 0;
 }
+
+/* === Mobile Layout === */
+@media (max-width: 768px) {
+  .site-header {
+    padding: 1rem;
+  }
+
+  .workspace {
+    padding: 1rem;
+    padding-top: calc(2rem + 1.1rem + 2px + 1rem);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .project-card {
+    position: static;
+    max-width: none;
+    width: 100%;
+    transform: none;
+    cursor: default;
+  }
+
+  .project-card:hover {
+    cursor: default;
+  }
+
+  .project-card:active,
+  .project-card.dragging {
+    cursor: default;
+  }
+}

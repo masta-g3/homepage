@@ -13,6 +13,10 @@ const dragState = {
 const DRAG_THRESHOLD = 5;
 const STORAGE_KEY = 'mg3_card_positions';
 
+function isMobileLayout() {
+  return window.matchMedia('(max-width: 768px)').matches;
+}
+
 function loadPositionsFromStorage() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -62,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cards = document.querySelectorAll('.project-card');
   const workspace = document.querySelector('.workspace');
 
-  if (workspace && cards.length > 0) {
+  if (workspace && cards.length > 0 && !isMobileLayout()) {
     const storedPositions = loadPositionsFromStorage();
 
     cards.forEach((card) => {
