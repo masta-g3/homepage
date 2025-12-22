@@ -52,11 +52,70 @@
 /* === Workspace === */
 .workspace {
   position: relative;
+  width: 100%;
   min-height: 100vh;
   padding-top: calc(2rem + 1.1rem + 2px + 2rem); /* header height + padding */
   padding-left: 2rem;
   padding-right: 2rem;
   padding-bottom: 2rem;
+}
+
+/* === Project Cards === */
+.project-card {
+  position: absolute;
+  background: var(--paper);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--black);
+  padding: 1rem;
+  max-width: 280px;
+  cursor: grab;
+  transform: rotate(var(--rotation, 0deg));
+  transition: border-color 0.15s ease, z-index 0s;
+}
+
+.project-card:hover {
+  border-width: 2px;
+  border-color: var(--black);
+  border-left-width: 3px;
+  z-index: 10;
+}
+
+.project-card:active,
+.project-card.dragging {
+  cursor: grabbing;
+}
+
+.project-card time {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--mid-gray);
+  margin-bottom: 0.25rem;
+}
+
+.project-card h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+  border: none;
+  padding: 0;
+}
+
+.project-card .description {
+  font-size: 0.9rem;
+  color: var(--mid-gray);
+  margin: 0 0 0.75rem;
+  line-height: 1.5;
+}
+
+.project-card .screenshot {
+  margin: 0;
+}
+
+.project-card .screenshot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border-color);
 }
 
 /* === Modal === */
