@@ -64,13 +64,13 @@
       "Add pointerup handler to release card",
       "Verify cards can be dragged smoothly"
     ],
-    "status": "pending",
+    "status": "done",
     "priority": 2,
     "depends_on": [
       "cards-001"
     ],
     "discovered_from": null,
-    "spec_file": "docs/STRUCTURE.md",
+    "spec_file": "docs/history/20241222_drag-001_card_drag.md",
     "created_at": "2024-12-22"
   },
   {
