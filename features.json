@@ -1,0 +1,187 @@
+[
+  {
+    "id": "core-001",
+    "description": "Create base HTML structure with header, workspace area, and about trigger",
+    "steps": [
+      "Create index.html with semantic HTML5 structure",
+      "Add header with site title and about link",
+      "Create main workspace container for project cards",
+      "Link styles.css and app.css",
+      "Verify page loads with dot-grid background"
+    ],
+    "status": "pending",
+    "priority": 1,
+    "depends_on": [],
+    "discovered_from": null,
+    "spec_file": "docs/STRUCTURE.md",
+    "created_at": "2024-12-22"
+  },
+  {
+    "id": "core-002",
+    "description": "Create app.css with homepage-specific styles (workspace, card layout)",
+    "steps": [
+      "Define workspace container (full viewport, relative positioning)",
+      "Create .project-card base styles (position, border, padding)",
+      "Add card rotation via CSS custom property",
+      "Add hover states (border thickening, z-index boost)",
+      "Add grab/grabbing cursor states"
+    ],
+    "status": "pending",
+    "priority": 1,
+    "depends_on": ["core-001"],
+    "discovered_from": null,
+    "spec_file": "docs/STRUCTURE.md",
+    "created_at": "2024-12-22"
+  },
+  {
+    "id": "cards-001",
+    "description": "Implement project card HTML structure with data attributes",
+    "steps": [
+      "Create article.project-card template with date, title, description",
+      "Add data-url, data-x, data-y, data-rotation attributes",
+      "Add optional screenshot figure element",
+      "Add 3-5 sample project cards with varied positions/rotations",
+      "Verify cards render at specified positions"
+    ],
+    "status": "pending",
+    "priority": 1,
+    "depends_on": ["core-002"],
+    "discovered_from": null,
+    "spec_file": "docs/STRUCTURE.md",
+    "created_at": "2024-12-22"
+  },
+  {
+    "id": "drag-001",
+    "description": "Implement card drag functionality with pointer events",
+    "steps": [
+      "Create app.js with card initialization",
+      "Add pointerdown handler to capture card and offset",
+      "Add pointermove handler to update card position",
+      "Add pointerup handler to release card",
+      "Verify cards can be dragged smoothly"
+    ],
+    "status": "pending",
+    "priority": 2,
+    "depends_on": ["cards-001"],
+    "discovered_from": null,
+    "spec_file": "docs/STRUCTURE.md",
+    "created_at": "2024-12-22"
+  },
+  {
+    "id": "drag-002",
+    "description": "Persist card positions to localStorage",
+    "steps": [
+      "On page load, read positions from localStorage",
+      "Apply stored positions to cards (override data-x/y)",
+      "On drag end, save updated position to localStorage",
+      "Handle missing/corrupt localStorage gracefully",
+      "Verify positions persist across page reload"
+    ],
+    "status": "pending",
+    "priority": 2,
+    "depends_on": ["drag-001"],
+    "discovered_from": null,
+    "spec_file": "docs/STRUCTURE.md",
+    "created_at": "2024-12-22"
+  },
+  {
+    "id": "cards-002",
+    "description": "Implement card click to navigate to external URL",
+    "steps": [
+      "Add click handler to cards",
+      "Distinguish click from drag (check movement distance)",
+      "Navigate to data-url on click (window.open for external)",
+      "Verify links work without interfering with drag"
+    ],
+    "status": "pending",
+    "priority": 2,
+    "depends_on": ["drag-001"],
+    "discovered_from": null,
+    "spec_file": "docs/STRUCTURE.md",
+    "created_at": "2024-12-22"
+  },
+  {
+    "id": "modal-001",
+    "description": "Create about modal HTML and CSS structure",
+    "steps": [
+      "Add modal backdrop and modal box to HTML",
+      "Style modal with 2px border, paper background",
+      "Add title bar with about heading and close button",
+      "Add content area for about text and links",
+      "Hide modal by default with display:none or visibility"
+    ],
+    "status": "pending",
+    "priority": 2,
+    "depends_on": ["core-002"],
+    "discovered_from": null,
+    "spec_file": "docs/STRUCTURE.md",
+    "created_at": "2024-12-22"
+  },
+  {
+    "id": "modal-002",
+    "description": "Implement modal open/close functionality",
+    "steps": [
+      "Add click handler to about trigger link",
+      "Show modal on trigger click",
+      "Close modal on close button click",
+      "Close modal on backdrop click",
+      "Close modal on Escape key press"
+    ],
+    "status": "pending",
+    "priority": 2,
+    "depends_on": ["modal-001"],
+    "discovered_from": null,
+    "spec_file": "docs/STRUCTURE.md",
+    "created_at": "2024-12-22"
+  },
+  {
+    "id": "responsive-001",
+    "description": "Implement mobile layout (stacked cards, no drag)",
+    "steps": [
+      "Add media query for max-width 768px",
+      "Convert workspace to vertical flex/grid layout",
+      "Disable position:absolute on cards for mobile",
+      "Remove rotation on mobile for cleaner list",
+      "Disable drag functionality on touch devices"
+    ],
+    "status": "pending",
+    "priority": 3,
+    "depends_on": ["drag-002", "modal-002"],
+    "discovered_from": null,
+    "spec_file": "docs/STRUCTURE.md",
+    "created_at": "2024-12-22"
+  },
+  {
+    "id": "a11y-001",
+    "description": "Add keyboard navigation and accessibility attributes",
+    "steps": [
+      "Add role and aria attributes to modal",
+      "Trap focus within open modal",
+      "Make cards focusable with tabindex",
+      "Add keyboard activation (Enter) for cards",
+      "Test with screen reader"
+    ],
+    "status": "pending",
+    "priority": 3,
+    "depends_on": ["modal-002", "cards-002"],
+    "discovered_from": null,
+    "spec_file": "docs/STRUCTURE.md",
+    "created_at": "2024-12-22"
+  },
+  {
+    "id": "polish-001",
+    "description": "Add reset button to restore default card positions",
+    "steps": [
+      "Add small reset link/button in corner",
+      "On click, clear localStorage positions",
+      "Reapply original data-x/data-y positions",
+      "Optional: subtle visual feedback on reset"
+    ],
+    "status": "pending",
+    "priority": 3,
+    "depends_on": ["drag-002"],
+    "discovered_from": null,
+    "spec_file": "docs/STRUCTURE.md",
+    "created_at": "2024-12-22"
+  }
+]

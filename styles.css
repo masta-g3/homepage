@@ -1,0 +1,653 @@
+/* Linear Content - Terminal Minimalist Theme */
+
+/* === Font Face (add your Berkeley Mono files to /fonts/) === */
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: url('fonts/BerkeleyMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Berkeley Mono';
+  src: url('fonts/BerkeleyMono-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* === CSS Variables === */
+:root {
+  --font-mono: 'Berkeley Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', 'Consolas', monospace;
+  --paper: #FAFAF9;
+  --black: #000000;
+  --mid-gray: #666666;
+  --border-color: #CCCCCC;
+  --grid-color: #E8E8E6;
+  --code-bg: #F5F5F3;
+  --inline-code-bg: #EFEFE9;
+  --selection-bg: #000000;
+  --selection-text: #FAFAF9;
+  --content-width: 48rem;
+  --grid-size: 20px;
+  --dot-size: 1px;
+  color-scheme: light dark;
+}
+
+/* Dark mode: industrial plotting paper (dark variant) */
+/* Dual selector: media query for system preference, body class for Quarto toggle */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #1E1D1B;
+    --black: #E6E4DF;
+    --mid-gray: #B8B6B0;
+    --border-color: #3D3B37;
+    --grid-color: #2F2D2A;
+    --code-bg: #252422;
+    --inline-code-bg: #2D2B28;
+    --selection-bg: #E6E4DF;
+    --selection-text: #1E1D1B;
+  }
+}
+
+body.quarto-dark {
+  --paper: #1E1D1B;
+  --black: #E6E4DF;
+  --mid-gray: #B8B6B0;
+  --border-color: #3D3B37;
+  --grid-color: #2F2D2A;
+  --code-bg: #252422;
+  --inline-code-bg: #2D2B28;
+  --selection-bg: #E6E4DF;
+  --selection-text: #1E1D1B;
+}
+
+/* === Base === */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--black);
+  background-color: var(--paper);
+  background-image: radial-gradient(circle, var(--grid-color) var(--dot-size), transparent var(--dot-size));
+  background-size: var(--grid-size) var(--grid-size);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === Navbar === */
+.navbar {
+  background-color: var(--paper) !important;
+  border-bottom: 2px solid var(--black);
+  padding: 1rem 0;
+}
+
+.navbar-brand {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--black) !important;
+  text-transform: lowercase;
+}
+
+.navbar-brand::before {
+  font-family: "bootstrap-icons";
+  content: "\f5c3";
+  margin-right: 0.4rem;
+  font-weight: 400;
+}
+
+.navbar-brand:hover {
+  text-decoration: underline;
+}
+
+.navbar-nav .nav-link {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--black) !important;
+  text-decoration: none;
+}
+
+.navbar-nav .nav-link:hover {
+  text-decoration: underline;
+}
+
+.navbar .bi {
+  font-size: 1rem;
+}
+
+.navbar-toggler {
+  border: 1px solid var(--black);
+}
+
+/* === Title Banner === */
+.quarto-title-banner {
+  background-color: transparent !important;
+  border-bottom: 1px solid var(--border-color);
+  padding: 2rem 0;
+  margin-bottom: 0;
+}
+
+.quarto-title-banner h1.title {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--black);
+  text-transform: lowercase;
+}
+
+.quarto-title-banner .description,
+.quarto-title-banner .subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--mid-gray);
+  margin-top: 0.5rem;
+}
+
+.quarto-title-meta {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--mid-gray);
+}
+
+/* === Main Content === */
+main.content {
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+  position: relative;
+}
+
+main.content::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--border-color) 0px,
+    var(--border-color) 4px,
+    transparent 4px,
+    transparent var(--grid-size)
+  );
+  opacity: 0.5;
+}
+
+#quarto-content {
+  background-color: transparent;
+}
+
+/* === Headings === */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--black);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+h3 { font-size: 1.1rem; }
+h4 { font-size: 1rem; }
+h5 { font-size: 0.95rem; }
+h6 { font-size: 0.9rem; }
+
+/* === Paragraphs === */
+p {
+  margin-bottom: 1.25rem;
+  line-height: 1.7;
+}
+
+/* === Links === */
+a {
+  color: var(--black);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* === Code === */
+pre {
+  font-family: var(--font-mono);
+  background-color: var(--code-bg) !important;
+  border: none;
+  border-left: 3px solid var(--black);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  font-size: 0.8rem !important;
+  line-height: 1.6;
+}
+
+pre > code {
+  background-color: var(--code-bg) !important;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background-color: var(--inline-code-bg) !important;
+  padding: 0.2em 0.4em;
+  color: var(--black) !important;
+}
+
+pre code {
+  font-family: var(--font-mono);
+  background-color: transparent;
+  padding: 0;
+  color: var(--black);
+  font-size: 0.8rem !important;
+  display: block;
+  min-width: fit-content;
+}
+
+/* === Blockquotes === */
+blockquote {
+  border-left: 2px solid var(--black);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--mid-gray);
+}
+
+/* === Lists === */
+ul, ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.4rem;
+}
+
+/* === Horizontal Rules === */
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 1.5rem 0;
+}
+
+/* === Tables === */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+th {
+  font-weight: 700;
+  border-bottom: 2px solid var(--black);
+}
+
+/* === Images === */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+figure {
+  margin: 1.5rem 0;
+}
+
+figcaption {
+  font-size: 0.85rem;
+  color: var(--mid-gray);
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+/* === Post Listing - Simple List Style === */
+#listing-listing {
+  margin-top: 1rem;
+}
+
+.quarto-listing-category {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  margin-bottom: 2rem;
+}
+
+.quarto-listing-category .category {
+  background-color: transparent;
+  color: var(--black);
+  padding: 0.25rem 0;
+  margin-right: 1rem;
+  border: none;
+  text-decoration: underline;
+}
+
+.quarto-listing-category .category:hover,
+.quarto-listing-category .category.active {
+  font-weight: 700;
+}
+
+/* Post Items */
+.quarto-post {
+  border: none !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  border-radius: 0 !important;
+  padding: 1rem 0 !important;
+  margin-bottom: 0 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.quarto-post:hover {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.quarto-post:last-child {
+  border-bottom: none !important;
+}
+
+.quarto-post .thumbnail {
+  display: none !important;
+}
+
+.quarto-post .listing-item-img-placeholder {
+  display: none !important;
+}
+
+.quarto-post .body {
+  flex: 1;
+}
+
+.quarto-post .listing-title {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--black);
+  margin: 0.25rem 0 0 0;
+  display: block;
+}
+
+.quarto-post .listing-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.quarto-post .listing-title a:hover {
+  text-decoration: underline;
+}
+
+.quarto-post .listing-date {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 0;
+  display: inline;
+}
+
+
+.quarto-post .listing-description {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--mid-gray);
+  margin-top: 0.25rem;
+  line-height: 1.5;
+}
+
+.quarto-post .listing-description a,
+.quarto-post .listing-description a p {
+  color: inherit;
+  text-decoration: none;
+}
+
+.quarto-post .listing-description a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.quarto-post .listing-categories {
+  display: inline;
+  margin-left: 0.5rem;
+}
+
+.quarto-post .listing-category {
+  font-size: 0.8rem;
+  color: var(--mid-gray);
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.quarto-post .listing-category::before {
+  content: "[";
+}
+
+.quarto-post .listing-category::after {
+  content: "]";
+}
+
+.quarto-post .metadata {
+  display: inline;
+  order: -1;
+  margin-right: 0;
+}
+
+/* Reorder: date first, then title */
+.quarto-post .body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0;
+}
+
+.quarto-post .body h3 {
+  margin: 0;
+  order: 1;
+}
+
+.quarto-post .body .listing-categories {
+  order: 2;
+}
+
+.quarto-post .body .listing-description {
+  order: 3;
+}
+
+/* Hide image placeholder */
+div.quarto-post.image-right,
+div.quarto-post.image-left {
+  display: block !important;
+}
+
+div.quarto-post.image-right > .thumbnail,
+div.quarto-post.image-left > .thumbnail {
+  display: none !important;
+}
+
+/* === About Page === */
+.quarto-about-trestles {
+  display: block;
+}
+
+.about-entity {
+  text-align: center;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 2rem;
+}
+
+.about-entity img.about-image {
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  border: 2px solid var(--black);
+  margin-bottom: 1rem;
+}
+
+.about-entity h2 {
+  font-size: 1.25rem;
+  border-bottom: none;
+  margin-top: 0;
+}
+
+.about-links {
+  margin-top: 1rem;
+}
+
+.about-link {
+  display: inline-block;
+  margin: 0.25rem 0.5rem;
+  padding: 0.25rem 0;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--black);
+  text-decoration: underline;
+}
+
+.about-link:hover {
+  text-decoration-thickness: 2px;
+  background-color: transparent;
+}
+
+/* === Footer === */
+.nav-footer {
+  background-color: transparent;
+  border-top: 1px solid var(--border-color);
+  color: var(--mid-gray);
+  padding: 1.5rem 0;
+  margin-top: 3rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.nav-footer a {
+  color: var(--black);
+}
+
+/* === Search === */
+.aa-DetachedSearchButton {
+  background-color: transparent !important;
+  border: 1px solid var(--black) !important;
+  border-radius: 0 !important;
+}
+
+/* Hide theme toggle (Quarto 1.7.29 bug: JS errors on pages without code) */
+.quarto-color-scheme-toggle {
+  display: none !important;
+}
+
+/* === Selection === */
+::selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+/* === Scrollbar === */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--paper);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--mid-gray);
+}
+
+/* === Math === */
+mjx-container[display="true"] {
+  margin: 1.5rem 0 !important;
+}
+
+/* === Jupyter Outputs === */
+.cell-output {
+  margin: 1rem 0;
+}
+
+.cell-output-display {
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+}
+
+.cell-output-stdout pre {
+  border: none;
+  border-left: 2px solid var(--mid-gray);
+  background-color: transparent !important;
+}
+
+/* === Dark Mode Syntax Highlighting (monochrome, warm) === */
+@media (prefers-color-scheme: dark) {
+  /* Base code text */
+  pre, pre code, .sourceCode, .sourceCode span {
+    color: var(--black) !important;
+  }
+
+  /* Keywords, control flow - brightest */
+  .sourceCode .kw, .sourceCode .cf, .sourceCode .op {
+    color: #FFFFFF !important;
+    font-weight: 700;
+  }
+
+  /* Strings, characters - warm muted */
+  .sourceCode .st, .sourceCode .ch, .sourceCode .vs, .sourceCode .ss {
+    color: #C8C4B8 !important;
+  }
+
+  /* Comments - dimmest */
+  .sourceCode .co, .sourceCode .an {
+    color: #7A7870 !important;
+    font-style: italic;
+  }
+
+  /* Functions, builtins */
+  .sourceCode .fu, .sourceCode .bu {
+    color: #E6E4DF !important;
+  }
+
+  /* Numbers, constants */
+  .sourceCode .dv, .sourceCode .bn, .sourceCode .fl, .sourceCode .cn {
+    color: #D0CEC8 !important;
+  }
+
+  /* Data types, attributes */
+  .sourceCode .dt, .sourceCode .at {
+    color: #BAB8B0 !important;
+  }
+
+  /* Variables */
+  .sourceCode .va {
+    color: #E6E4DF !important;
+  }
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .quarto-title-banner h1.title {
+    font-size: 1.25rem;
+  }
+
+  h1 { font-size: 1.25rem; }
+  h2 { font-size: 1.1rem; }
+
+  .quarto-post .body {
+    flex-direction: column;
+  }
+}
