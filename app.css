@@ -49,6 +49,11 @@
   text-decoration-thickness: 2px;
 }
 
+.about-trigger:focus-visible {
+  outline: 2px solid var(--black);
+  outline-offset: 2px;
+}
+
 /* === Workspace === */
 .workspace {
   position: relative;
@@ -83,6 +88,13 @@
 .project-card:active,
 .project-card.dragging {
   cursor: grabbing;
+}
+
+.project-card:focus-visible {
+  outline: 2px solid var(--black);
+  outline-offset: 2px;
+  border-color: var(--black);
+  z-index: 10;
 }
 
 .project-card time {
@@ -163,6 +175,11 @@
 
 .modal-close:hover {
   text-decoration: underline;
+}
+
+.modal-close:focus-visible {
+  outline: 2px solid var(--black);
+  outline-offset: 2px;
 }
 
 .modal-content {

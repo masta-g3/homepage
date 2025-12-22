@@ -102,6 +102,13 @@ document.addEventListener('DOMContentLoaded', () => {
           window.open(url, '_blank');
         }
       });
+
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          window.open(url, '_blank');
+        }
+      });
     }
   });
 });

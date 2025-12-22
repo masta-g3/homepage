@@ -178,14 +178,14 @@
       "Add keyboard activation (Enter) for cards",
       "Test with screen reader"
     ],
-    "status": "pending",
+    "status": "done",
     "priority": 3,
     "depends_on": [
       "modal-002",
       "cards-002"
     ],
     "discovered_from": null,
-    "spec_file": "docs/STRUCTURE.md",
+    "spec_file": "docs/history/20241222_a11y-001_keyboard_accessibility.md",
     "created_at": "2024-12-22"
   },
   {
