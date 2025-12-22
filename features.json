@@ -9,7 +9,7 @@
       "Link styles.css and app.css",
       "Verify page loads with dot-grid background"
     ],
-    "status": "pending",
+    "status": "done",
     "priority": 1,
     "depends_on": [],
     "discovered_from": null,
@@ -28,7 +28,9 @@
     ],
     "status": "pending",
     "priority": 1,
-    "depends_on": ["core-001"],
+    "depends_on": [
+      "core-001"
+    ],
     "discovered_from": null,
     "spec_file": "docs/STRUCTURE.md",
     "created_at": "2024-12-22"
@@ -45,7 +47,9 @@
     ],
     "status": "pending",
     "priority": 1,
-    "depends_on": ["core-002"],
+    "depends_on": [
+      "core-002"
+    ],
     "discovered_from": null,
     "spec_file": "docs/STRUCTURE.md",
     "created_at": "2024-12-22"
@@ -62,7 +66,9 @@
     ],
     "status": "pending",
     "priority": 2,
-    "depends_on": ["cards-001"],
+    "depends_on": [
+      "cards-001"
+    ],
     "discovered_from": null,
     "spec_file": "docs/STRUCTURE.md",
     "created_at": "2024-12-22"
@@ -79,7 +85,9 @@
     ],
     "status": "pending",
     "priority": 2,
-    "depends_on": ["drag-001"],
+    "depends_on": [
+      "drag-001"
+    ],
     "discovered_from": null,
     "spec_file": "docs/STRUCTURE.md",
     "created_at": "2024-12-22"
@@ -95,7 +103,9 @@
     ],
     "status": "pending",
     "priority": 2,
-    "depends_on": ["drag-001"],
+    "depends_on": [
+      "drag-001"
+    ],
     "discovered_from": null,
     "spec_file": "docs/STRUCTURE.md",
     "created_at": "2024-12-22"
@@ -112,7 +122,9 @@
     ],
     "status": "pending",
     "priority": 2,
-    "depends_on": ["core-002"],
+    "depends_on": [
+      "core-002"
+    ],
     "discovered_from": null,
     "spec_file": "docs/STRUCTURE.md",
     "created_at": "2024-12-22"
@@ -129,7 +141,9 @@
     ],
     "status": "pending",
     "priority": 2,
-    "depends_on": ["modal-001"],
+    "depends_on": [
+      "modal-001"
+    ],
     "discovered_from": null,
     "spec_file": "docs/STRUCTURE.md",
     "created_at": "2024-12-22"
@@ -146,7 +160,10 @@
     ],
     "status": "pending",
     "priority": 3,
-    "depends_on": ["drag-002", "modal-002"],
+    "depends_on": [
+      "drag-002",
+      "modal-002"
+    ],
     "discovered_from": null,
     "spec_file": "docs/STRUCTURE.md",
     "created_at": "2024-12-22"
@@ -163,7 +180,10 @@
     ],
     "status": "pending",
     "priority": 3,
-    "depends_on": ["modal-002", "cards-002"],
+    "depends_on": [
+      "modal-002",
+      "cards-002"
+    ],
     "discovered_from": null,
     "spec_file": "docs/STRUCTURE.md",
     "created_at": "2024-12-22"
@@ -179,7 +199,9 @@
     ],
     "status": "pending",
     "priority": 3,
-    "depends_on": ["drag-002"],
+    "depends_on": [
+      "drag-002"
+    ],
     "discovered_from": null,
     "spec_file": "docs/STRUCTURE.md",
     "created_at": "2024-12-22"

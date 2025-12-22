@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>mg3.dev</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-title">mg3.dev</a>
+    <nav class="site-nav">
+      <button type="button" class="about-trigger" aria-haspopup="dialog">[about]</button>
+    </nav>
+  </header>
+
+  <main class="workspace">
+    <!-- project cards will be placed here -->
+  </main>
+
+  <dialog class="about-modal" aria-labelledby="about-title">
+    <header class="modal-header">
+      <h2 id="about-title">about</h2>
+      <button type="button" class="modal-close" aria-label="Close">[×]</button>
+    </header>
+    <div class="modal-content">
+      <p><!-- about content to be filled --></p>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>

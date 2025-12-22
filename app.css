@@ -1,0 +1,121 @@
+/* Homepage-specific styles */
+
+/* === Header === */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--paper);
+  border-bottom: 2px solid var(--black);
+}
+
+.site-title {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--black);
+  text-decoration: none;
+  text-transform: lowercase;
+}
+
+.site-title:hover {
+  text-decoration: underline;
+}
+
+.site-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.about-trigger {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--black);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.about-trigger:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* === Workspace === */
+.workspace {
+  position: relative;
+  min-height: 100vh;
+  padding-top: calc(2rem + 1.1rem + 2px + 2rem); /* header height + padding */
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* === Modal === */
+.about-modal {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  max-width: 32rem;
+  max-height: 80vh;
+  background-color: var(--paper);
+  border: 2px solid var(--black);
+  padding: 0;
+  overflow: hidden;
+}
+
+.about-modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h2 {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+  text-transform: lowercase;
+}
+
+.modal-close {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--black);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  text-decoration: underline;
+}
+
+.modal-content {
+  padding: 1.5rem;
+  overflow-y: auto;
+  max-height: calc(80vh - 3rem);
+}
+
+.modal-content p {
+  margin: 0 0 1rem;
+}
+
+.modal-content p:last-child {
+  margin-bottom: 0;
+}
