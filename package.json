@@ -1,0 +1,7 @@
+{
+  "name": "mg3-homepage",
+  "type": "module",
+  "dependencies": {
+    "pg": "^8.11.3"
+  }
+}
