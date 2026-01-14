@@ -62,12 +62,12 @@ function createBookmarkCard(bookmark) {
 
   const timeAgo = formatTimeAgo(bookmark.created_at);
   const isProfilePic = bookmark.thumbnail_url?.includes('/profile_images/');
-  const thumbnailClass = isProfilePic ? 'thumbnail-profile' : '';
+  const showThumbnail = bookmark.thumbnail_url && !isProfilePic;
 
   let thumbnailHtml = '';
-  if (bookmark.thumbnail_url) {
+  if (showThumbnail) {
     thumbnailHtml = `
-      <figure class="card-thumbnail ${thumbnailClass}">
+      <figure class="card-thumbnail">
         <img src="${bookmark.thumbnail_url}" alt="" loading="lazy">
       </figure>
     `;
