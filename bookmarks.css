@@ -344,6 +344,35 @@
   margin: 0;
 }
 
+/* === Context Menu === */
+.context-menu {
+  position: fixed;
+  background: var(--paper);
+  border: 1px solid var(--black);
+  padding: 0.25rem;
+  z-index: 1000;
+}
+
+.context-action {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  background: none;
+  border: none;
+  color: var(--black);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+.context-action::before { content: "["; }
+.context-action::after { content: "]"; }
+
+.context-action:hover {
+  text-decoration: underline;
+}
+
 /* === Mobile === */
 @media (max-width: 768px) {
   .site-header {

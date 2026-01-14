@@ -5,16 +5,27 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { filter, limit = '20', offset = '0' } = req.query;
+  const { filter, archived, limit = '20', offset = '0' } = req.query;
 
-  let whereClause = '';
-  if (filter === 'unread') {
-    whereClause = 'WHERE read_at IS NULL';
-  } else if (filter === 'x_article') {
-    whereClause = "WHERE source_type = 'x_article'";
-  } else if (filter === 'external') {
-    whereClause = "WHERE source_type = 'external'";
+  const conditions = [];
+
+  // Archive filter (default: exclude archived)
+  if (archived === 'true') {
+    conditions.push('archived_at IS NOT NULL');
+  } else {
+    conditions.push('archived_at IS NULL');
   }
+
+  // Type/status filters
+  if (filter === 'unread') {
+    conditions.push('read_at IS NULL');
+  } else if (filter === 'x_article') {
+    conditions.push("source_type = 'x_article'");
+  } else if (filter === 'external') {
+    conditions.push("source_type = 'external'");
+  }
+
+  const whereClause = 'WHERE ' + conditions.join(' AND ');
 
   const result = await pool.query(`
     SELECT * FROM personal.x_bookmarks

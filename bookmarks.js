@@ -3,6 +3,7 @@
 const state = {
   bookmarks: [],
   filter: 'all',
+  archived: false,
   offset: 0,
   limit: 20,
   total: 0,
@@ -27,7 +28,11 @@ async function fetchBookmarks(reset = false) {
     offset: state.offset
   });
 
-  if (state.filter !== 'all') {
+  if (state.archived) {
+    params.set('archived', 'true');
+  }
+
+  if (state.filter !== 'all' && state.filter !== 'archived') {
     params.set('filter', state.filter);
   }
 
@@ -62,12 +67,12 @@ function createBookmarkCard(bookmark) {
 
   const timeAgo = formatTimeAgo(bookmark.created_at);
   const isProfilePic = bookmark.thumbnail_url?.includes('/profile_images/');
-  const showThumbnail = bookmark.thumbnail_url && !isProfilePic;
+  const thumbnailClass = isProfilePic ? 'thumbnail-profile' : '';
 
   let thumbnailHtml = '';
-  if (showThumbnail) {
+  if (bookmark.thumbnail_url) {
     thumbnailHtml = `
-      <figure class="card-thumbnail">
+      <figure class="card-thumbnail ${thumbnailClass}">
         <img src="${bookmark.thumbnail_url}" alt="" loading="lazy">
       </figure>
     `;
@@ -92,6 +97,11 @@ function createBookmarkCard(bookmark) {
     }
   });
 
+  card.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    showContextMenu(e.clientX, e.clientY, bookmark, card);
+  });
+
   const img = card.querySelector('img');
   if (img) {
     img.addEventListener('error', () => {
@@ -111,6 +121,45 @@ async function openBookmark(bookmark, card) {
     card.classList.remove('unread');
     card.classList.add('read');
   }
+}
+
+async function archiveBookmark(bookmark, card) {
+  const endpoint = state.archived
+    ? `/api/bookmarks/${bookmark.x_id}/unarchive`
+    : `/api/bookmarks/${bookmark.x_id}/archive`;
+
+  await fetch(endpoint, { method: 'POST' });
+
+  card.remove();
+  state.bookmarks = state.bookmarks.filter(b => b.x_id !== bookmark.x_id);
+  state.total--;
+
+  if (state.bookmarks.length === 0) {
+    document.querySelector('.bookmarks-page').classList.add('empty');
+  }
+}
+
+function showContextMenu(x, y, bookmark, card) {
+  document.querySelector('.context-menu')?.remove();
+
+  const menu = document.createElement('div');
+  menu.className = 'context-menu';
+  menu.style.left = x + 'px';
+  menu.style.top = y + 'px';
+
+  const action = state.archived ? 'unarchive' : 'archive';
+  menu.innerHTML = `<button class="context-action">${action}</button>`;
+
+  menu.querySelector('button').addEventListener('click', () => {
+    archiveBookmark(bookmark, card);
+    menu.remove();
+  });
+
+  document.body.appendChild(menu);
+
+  setTimeout(() => {
+    document.addEventListener('click', () => menu.remove(), { once: true });
+  }, 0);
 }
 
 function render() {
@@ -159,21 +208,26 @@ function initializeModal() {
 document.addEventListener('DOMContentLoaded', () => {
   initializeModal();
 
-  // Filter buttons
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelector('.filter-btn.active').classList.remove('active');
       btn.classList.add('active');
-      state.filter = btn.dataset.filter;
+
+      if (btn.dataset.filter === 'archived') {
+        state.archived = true;
+        state.filter = 'all';
+      } else {
+        state.archived = false;
+        state.filter = btn.dataset.filter;
+      }
+
       fetchBookmarks(true);
     });
   });
 
-  // Load more
   document.querySelector('.load-more').addEventListener('click', () => {
     fetchBookmarks(false);
   });
 
-  // Initial load
   fetchBookmarks(true);
 });
