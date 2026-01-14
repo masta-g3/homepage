@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>bookmarks - mg3.dev</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../bookmarks.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="site-title">mg3.dev</a>
+    <nav class="site-nav">
+      <a href="/">[home]</a>
+      <button type="button" class="about-trigger" aria-haspopup="dialog">[about]</button>
+    </nav>
+  </header>
+
+  <main class="bookmarks-page">
+    <h1>bookmarks</h1>
+
+    <nav class="filter-bar">
+      <div class="filter-group">
+        <button class="filter-btn active" data-filter="all">all</button>
+        <button class="filter-btn" data-filter="unread">unread</button>
+        <button class="filter-btn" data-filter="x_article">x_article</button>
+        <button class="filter-btn" data-filter="external">external</button>
+      </div>
+    </nav>
+
+    <div class="bookmarks-grid"></div>
+
+    <div class="load-more-container">
+      <button class="load-more">load more</button>
+    </div>
+
+    <p class="loading-state">loading...</p>
+    <p class="empty-state">no bookmarks found</p>
+  </main>
+
+  <dialog class="about-modal" aria-labelledby="about-title">
+    <header class="modal-header">
+      <h2 id="about-title">about</h2>
+      <button type="button" class="modal-close" aria-label="Close">[×]</button>
+    </header>
+    <div class="modal-content">
+      <p>Stories of a land fish living in SF.</p>
+    </div>
+  </dialog>
+
+  <script src="../bookmarks.js"></script>
+</body>
+</html>

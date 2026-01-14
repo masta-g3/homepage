@@ -23,17 +23,26 @@ A single-page interactive portfolio/homepage that transforms the industrial plot
 
 ```
 homepage/
-├── index.html          # Single page entry point (shell only)
+├── index.html          # Homepage entry point (shell only)
 ├── data.json           # Project cards and about content
 ├── styles.css          # Inherited design system (from blog)
 ├── app.css             # Homepage-specific styles (cards, workspace, modal)
 ├── app.js              # Fetches data.json, renders cards, handles interactions
+├── bookmarks/
+│   └── index.html      # Bookmarks page (clean URL: /bookmarks)
+├── bookmarks.css       # Bookmarks page styles
+├── bookmarks.js        # Bookmarks client interactions
+├── api/
+│   ├── db.js           # Shared PostgreSQL pool (Vercel serverless)
+│   ├── bookmarks.js    # GET /api/bookmarks
+│   └── bookmarks/[id]/read.js  # POST mark as read
 ├── fonts/              # Berkeley Mono woff2 files
 ├── images/             # Project screenshots (optional)
 │   └── projects/       # Organized by project slug
 ├── docs/
 │   ├── STRUCTURE.md    # This file
-│   └── VISUAL_IDENTITY.md  # Design system reference
+│   ├── VISUAL_IDENTITY.md  # Design system reference
+│   └── history/        # Archived feature specs
 └── features.json       # Feature backlog
 ```
 
